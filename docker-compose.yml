@@ -1,0 +1,11 @@
+services:
+  db:
+    image: postgres
+    restart: on-failure
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: admin
+    volumes:
+      - <local directory>:/data/postgres
+    ports:
+      - 5432:5432
