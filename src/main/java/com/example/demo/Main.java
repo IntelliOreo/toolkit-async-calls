@@ -2,13 +2,17 @@ package com.example.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.http.HttpHeaders;
 import java.time.LocalDate;
 import java.util.List;
 
 @SpringBootApplication
 @RestController
+@CrossOrigin(origins="http://localhost:8080")
 public class Main {
     private final NoteRepository noteRepository;
 
@@ -26,13 +30,14 @@ public class Main {
     }
 
     @PostMapping ("/api/db")
-    public void postNote(@RequestBody NewNoteRequest request){
+    public ResponseEntity<String> postNote(@RequestBody NewNoteRequest request){
         Note note = new Note();
         note.setTitle(request.title());
         note.setRating(request.rating());
         note.setBody(request.body());
         note.setDate(LocalDate.now());
         noteRepository.save(note);
+        return ResponseEntity.ok("ok");
     }
 
     record NewNoteRequest(
